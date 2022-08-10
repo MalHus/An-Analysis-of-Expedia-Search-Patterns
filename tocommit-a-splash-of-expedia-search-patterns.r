@@ -30,6 +30,9 @@ expedia_data <- read_csv("ExpediaSearchData.csv")
 - \textbf{\textcolor{Expediablue}{Expedia}} users undoubtedly consider both **review score** and **number of reviews** when picking a listing.
 - Important to know the relationship between the number of reviews and the review score of a listing, as this can provide a pattern of the choices of listings of \textbf{\textcolor{Expediablue}{Expedia}} users.
 
+
+
+
 ### RESEARCH QUESTION 2
 What is the association between the **number of reviews** and the mean customer **review score**? 
 
@@ -37,8 +40,9 @@ What is the association between the **number of reviews** and the mean customer 
 - **\textcolor{Black}{Review Score}**: The mean customer review score for the listed property on a scale from 0 to 5, rounded to nearest integer. 0 means that there are no reviews. 
 
 
-## RQ2: Data Summary
 
+
+## RQ2: Data Summary
 **\textcolor{Blue}{Data Wrangling}**: Since we are interested in a dataset containing **unique** listing review scores and number of reviews, the given dataset was cleaned to only include observations of this precondition.
 
 Out of the **3000** customer searches (1000 per 3 listings), **2618** listings were **unique**.
@@ -47,6 +51,7 @@ Out of the **3000** customer searches (1000 per 3 listings), **2618** listings w
 ### Data Wrangling Steps
 1. We create a new dataset containing the original column **destination of listing**, and combine the **star rating**, **review score**, and **review count** of the 1st, 2nd, and 3rd listings into 3 columns. Instead of 1+9 columns of 1000 observations, there are now 1+3 columns of 3000 observations.
 2. We remove the duplicate rows. The dataset now has 2618 observations.
+
 
 ```{r, eval=TRUE, include=FALSE}
 # PREPARING THE DATA
@@ -93,6 +98,9 @@ expedia_rq2_distinct <- expedia_rq2 %>%
 3. Create the summary table, the equation of the fitted line, and evaluate the **null hypothesis**. The result is determined by the **p-value**, which measures the strength of evidence against the null hypothesis.
 
 
+
+
+
 ## RQ2: Results
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.5, fig.width=4, fig.align='center'}
@@ -121,6 +129,9 @@ summary(model1)$coefficients
 # intercept: estimate (4.199467), p-value (0.00)
 # count: estimate(-3.024987e-06), p-value (0.5485609)
 ```
+
+
+
 
 ## RQ2: Results
 - Null hypothesis: the slope of the fitted line is equal to 0. 
