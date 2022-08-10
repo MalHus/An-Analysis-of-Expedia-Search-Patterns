@@ -1,0 +1,1 @@
+# Epedia-Search-Patterns
