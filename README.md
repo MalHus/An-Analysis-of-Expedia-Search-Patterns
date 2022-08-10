@@ -1,6 +1,6 @@
 # Expedia Search Patterns
 
-STA130 final project.
+University of Toronto STA130: Intro to Statistical Reasoning and Data Science final project.
 
 Malaikah Hussain, Hannah Pan, Julie Tang
 
