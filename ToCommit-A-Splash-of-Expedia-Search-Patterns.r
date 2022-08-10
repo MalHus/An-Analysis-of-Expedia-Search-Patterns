@@ -23,7 +23,115 @@ expedia_data <- read_csv("ExpediaSearchData.csv")
 
 
 
+## Research Question 2: Introduction and Objective
+\definecolor{Expediablue}{rgb}{0, 0.20784, 0.37254} 
+\definecolor{Expediayellow}{rgb}{0.93333, 0.76078, 0.09412}
 
+- \textbf{\textcolor{Expediablue}{Expedia}} users undoubtedly consider both **review score** and **number of reviews** when picking a listing.
+- Important to know the relationship between the number of reviews and the review score of a listing, as this can provide a pattern of the choices of listings of \textbf{\textcolor{Expediablue}{Expedia}} users.
+
+### RESEARCH QUESTION 2
+What is the association between the **number of reviews** and the mean customer **review score**? 
+
+- **\textcolor{Black}{Number of Reviews}**: The quantity of reviews per listing, to the nearest 25.
+- **\textcolor{Black}{Review Score}**: The mean customer review score for the listed property on a scale from 0 to 5, rounded to nearest integer. 0 means that there are no reviews. 
+
+
+## RQ2: Data Summary
+
+**\textcolor{Blue}{Data Wrangling}**: Since we are interested in a dataset containing **unique** listing review scores and number of reviews, the given dataset was cleaned to only include observations of this precondition.
+
+Out of the **3000** customer searches (1000 per 3 listings), **2618** listings were **unique**.
+
+
+### Data Wrangling Steps
+1. We create a new dataset containing the original column **destination of listing**, and combine the **star rating**, **review score**, and **review count** of the 1st, 2nd, and 3rd listings into 3 columns. Instead of 1+9 columns of 1000 observations, there are now 1+3 columns of 3000 observations.
+2. We remove the duplicate rows. The dataset now has 2618 observations.
+
+```{r, eval=TRUE, include=FALSE}
+# PREPARING THE DATA
+# STEP 1: Keeping only the required columns from each listing, renaming them to be the same name (the rbind() functions requires columns to be the same name in order to combine them)
+# 3 tibbles for each listing, star rating (of listing itself), destination, review score, number of reviews
+data1 <- expedia_data %>%
+  mutate(rating = review_rating1,
+         count = review_count1,
+         star = star_rating1,
+         destination = destination_id) %>%
+  select(rating, count, star, destination)
+data2 <- expedia_data %>%
+  mutate(rating = review_rating2,
+         count = review_count2,
+         star = star_rating2,
+         destination = destination_id) %>%
+  select(rating, count, star, destination)
+data3 <- expedia_data %>%
+  mutate(rating = review_rating3,
+         count = review_count3,
+         star = star_rating3,
+         destination = destination_id) %>%
+  select(rating, count, star, destination)
+# STEP 2: Combining the three separate tibbles together
+expedia_rq2 <- rbind(data1, data2, data3)
+# STEP 3: Removing possible duplicate rows, as well as observations with a review score of 0 and no number of reviews
+# installing the required library to keep unique observations
+library(dplyr)
+expedia_rq2_distinct <- expedia_rq2 %>%
+  filter(rating != 0 & count != 0) %>%
+  distinct()
+```
+
+
+
+## RQ2: Statistical Methods
+
+**\textcolor{Blue}{Simple Linear Regression}**: A model which uses values from a line of best fit to explain the relationship between the predictor and the response variable. If there is no association, the slope of the fitted line would be 0.
+
+
+### Simple Linear Regression Steps:
+1. Create the scatter plot, where the x-axis (**predictor**) is the number of reviews, and the y-axis (**response variable**) is the review score.
+2. Plot and calculate the best fit line, and calculate strength of the correlation between our variables (the **r value**).
+3. Create the summary table, the equation of the fitted line, and evaluate the **null hypothesis**. The result is determined by the **p-value**, which measures the strength of evidence against the null hypothesis.
+
+
+## RQ2: Results
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.5, fig.width=4, fig.align='center'}
+# STEP 1: Creating the scatter plot with the line of best fit
+expedia_rq2_distinct %>%  ggplot(aes(x=count, y=rating)) +
+  geom_point() +
+  labs(subtitle="Fig. 2: Number of Reviews vs. Review Score",
+       x="Number of Reviews",
+       y="Review Score") +
+geom_smooth(se=FALSE, method="lm") +
+theme_minimal()
+```
+
+The equation of the fitted line is $y = 4.20 - 3.02 \cdot 10^{-6}x$, the strength of the linear association is $-0.012$, and the p-value is $0.55$.
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+# STEP 2: Calculating the r value
+cor(x = expedia_rq2_distinct$count,
+    y = expedia_rq2_distinct$rating)
+# r value: -0.01173004
+# STEP 3: Creating the summary table
+model1 <-lm(rating ~ count,
+            data = expedia_rq2_distinct)
+summary(model1)$coefficients
+# from summary table:
+# intercept: estimate (4.199467), p-value (0.00)
+# count: estimate(-3.024987e-06), p-value (0.5485609)
+```
+
+## RQ2: Results
+- Null hypothesis: the slope of the fitted line is equal to 0. 
+- P-value indicates that there is no evidence against our null hypothesis, aligns with our slope of approximately 0. 
+- Strength of correlation is close to 0, showing that there is little to no correlation between the predictor and response variable. 
+- This mirrors our conclusion drawn from the summary table, as a slope of 0 means that the predictor does not affect the response variable in any way.
+
+**\textcolor{Blue}{Implications}**: 
+
+- A bit surprising, results show that those two variables may not have been affecting one another as much as anticipated. 
+- For the future, weights could be added in order to improve the algorithm: an 'overall rating' calculated from a sample equation (0.5 x number of reviews) + (0.5 x review score).
 
 
 
