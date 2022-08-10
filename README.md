@@ -1,4 +1,4 @@
-# Expedia-Search-Patterns
+# Expedia Search Patterns
 
 STA130 final project.
 
