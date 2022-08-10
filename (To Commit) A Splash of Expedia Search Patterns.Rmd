@@ -1,0 +1,220 @@
+---
+title: A \textcolor{CadetBlue}{S}\textcolor{SeaGreen}{p}\textcolor{Periwinkle}{l}\textcolor{Apricot}{a}\textcolor{SkyBlue}{s}\textcolor{pink}{h} of Expedia Search Patterns!
+author: "Malaikah Hussain, Hannah Pan & Julie Tang - Group 5"
+subtitle: \textcolor{black}{Kindly Fasten Your Seatbelts}
+date: March 31, 2022
+output: 
+  beamer_presentation:
+    theme: "Pittsburgh"
+    colortheme: "orchid"
+    fonttheme: "structurebold"
+    slide_level: 2
+classoption: "aspectratio=169"
+fontsize: 11pt
+urlcolor: blue
+---
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+expedia_data <- read_csv("ExpediaSearchData.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+## Research Question 3: Introduction and Objective
+
+### Pay-Per-Click
+**\textcolor{Blue}{Expedia}** uses a PCP marketing model whereby **\textcolor{Blue}{Expedia}** receives monetization from the advertiser per customer's click on the listing ad. Determining the possible **average number of reviews** that travel ads receive **reveals** the **effectiveness** of these ads on the quantity of reviews **\textcolor{Blue}{Expedia}** listings receive.
+
+### Research Question 3
+What is the **range of plausible values** for the average **number of reviews** for **\textcolor{Blue}{Expedia}** property listings that are **travel advertisements**? 
+
+- **\textcolor{Black}{Plausible Values}**: An interval of the form (x, y) where the original mean number of review value may lie   
+- **\textcolor{Black}{Number of Reviews}**: The quantity of reviews per travel ad, rounded to the nearest 25 
+- **\textcolor{Black}{Travel Ads}**: Listings labeled as "Ad"
+
+
+
+
+## RQ3: Data Summary 
+
+**\textcolor{Blue}{Data Wrangling}**: Since rows in the dataset are **customer searches** and the RQ is interested in the **listings**, the data was cleaned to identify unique **listings** from the 1000 searches. 
+
+\begin{center}
+Out of the \textbf{2618} \textcolor{Blue}{Expedia} listings \textbf{902} were travel ads.
+\end{center}
+
+
+
+
+### Data Wrangling Steps 
+1. The dataset is cleaned to obtain **listings** from the given 1000 customer **searches**.
+2. Similar values across **star rating**, **review score**, **review count** and **destination address** imply duplicate listings and are eliminated from the dataset.
+3. The dataset is filtered to only include listings that are ads (`travel_ad == 1`) to generate a dataset with 902 rows named `review_rating_902`.
+
+```{r eval=TRUE, include=FALSE}
+# DATA WRANGLING 
+
+# STEP 1: Keeping only the required columns from each listing, renaming them to be the same name (the rbind() functions requires columns to be the same name in order to combine them)
+# 3 tibbles for each listing with columns: review rating, review count, star rating (of listing itself), destination & travel ad 
+data1 <- expedia_data %>%
+  mutate(rating = review_rating1,
+         count = review_count1,
+         star = star_rating1,
+         destination = destination_id,
+         travel = is_travel_ad1) %>% 
+  select(rating, count, star, destination, travel)
+
+data2 <- expedia_data %>%
+  mutate(rating = review_rating2,
+         count = review_count2,
+         star = star_rating2,
+         destination = destination_id,
+         travel = is_travel_ad2) %>%
+  select(rating, count, star, destination, travel)
+
+data3 <- expedia_data %>%
+  mutate(rating = review_rating3,
+         count = review_count3,
+         star = star_rating3,
+         destination = destination_id,
+         travel = is_travel_ad3) %>%
+  select(rating, count, star, destination, travel)
+
+
+# STEP 2: Combining the three separate tibbles together through rbind()
+expedia_rq2 <- rbind(data1, data2, data3)
+
+# STEP 3: Removing possible duplicate rows, as well as observations with a review score of 0, no number of reviews and travel ads (1 = "yes")
+# installing the required library to keep unique observations
+library(dplyr)
+expedia_rq2_distinct <- expedia_rq2 %>%
+  filter(rating != 0 & count != 0 & travel == 1) %>%
+  distinct()
+
+expedia_rq2_distinct
+
+#STEP 4: Select only "count" column 
+travel_reviews_902 <- expedia_rq2_distinct %>% select(count) %>% rowid_to_column()
+
+travel_reviews_902
+```
+
+
+
+
+## RQ3: Statistical Methods
+
+**\textcolor{Blue}{Bootstrapping}**: A statistical method which involves the random re-sampling of data values from the original sample to obtain a **range of plausible** values of the population statistic.
+
+### Bootrapping Steps
+1. A *sample* of our sample data `travel_reviews_902` is taken with replacement
+2. The mean of the bootstrap sample data values/`review counts` is calculated
+3. Step 1. and 2. is repeated 5000 times to get a *distribution* of bootstrapped means 
+4. The 2.5th to 97.5th percentile of the mean values is calculated, revealing the interval
+
+
+
+
+## RQ3: Results
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.5, fig.width=5.5, fig.align='center'}
+### Change size of text of titles
+small <- theme(plot.subtitle = element_text(size=(5)))
+
+### VISUALIZATION
+
+#Step 1: Plot a boxplot with the outliers
+ggp1 <- ggplot(data = travel_reviews_902, aes(x = "", y = count)) + geom_boxplot(colour = "black", fill = "gold1") + labs(y = "Number of Reviews", x = "Travel Ads", subtitle = "Fig. 3: Distribution of Review Counts for Travel Ads") + small
+  
+#Step 2: Plot a boxplot without the outliers with filter()
+new_travel_reviews_902 <- travel_reviews_902 %>% filter(count < 3000)
+ggp2 <- ggplot(data = new_travel_reviews_902, aes(x = "", y = count)) + geom_boxplot(colour = "black", fill = "gold1") + labs(y = "Number of Reviews", x = "Travel Ads", subtitle = "Fig. 4: Distribution of Review Counts for Travel Ads (count < 3000)") + small
+
+#Step 3: Install new package to display graphs side by side (Ar, 2016).
+r = getOption("repos")
+r["CRAN"] = "http://cran.us.r-project.org/"
+options(repos = r)
+install.packages("gridExtra")
+library("gridExtra")
+grid.arrange(ggp1, ggp2, ncol = 2)
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2, fig.width=4, fig.show='hide', results='hide'}
+### BOOTSTRAP SAMPLING
+
+#Step 1: Bootstrap sampling distribution for the mean review count
+set.seed(564)
+
+boot_means <- rep(NA, 0)
+for (i in 1:5000){
+  boot_samp <- travel_reviews_902 %>% sample_n(size=902, replace=TRUE)
+  boot_means[i] <-
+    as.numeric(boot_samp %>% 
+                 summarize(mean_review_count = mean(count)))
+}
+boot_means <- tibble(mean_review_count = boot_means)
+
+#Step 2: Sampling Distribution
+ggplot(data = boot_means, aes(x = mean_review_count)) + 
+  geom_histogram(colour = "black", fill = "goldenrod1", bins = 30) + 
+  labs(x = "Means from samples of size 905")
+
+#Step 3: Calculate where the middle 95% of the values lie (2.5th and 97.5th percentiles)
+quantile(boot_means$mean_review_count, c(0.025, 0.975))
+```
+
+
+
+
+## RQ3: Results
+\begin{center}
+\textbf{The range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements is (1168, 1479)}
+\end{center}
+
+### Boxplot Description:
+1. While 50% of the distribution lie near the 400 to 1000 range, the extreme outliers display the variability of the data. This means that in the process of bootstrapping, some samples may contain a higher proportion of outliers, being unrepresentative of the overall population.
+2. All listings that have reviews greater than 2000 are outliers. \
+
+### Confidence
+Compared to the range of the values in the dataset, the 95% **Confidence Interval** is narrow (small), implying that if we got a different sample from the population, we could expect to get a similar value for the estimated mean.
+
+
+
+
+## Limitations of Approach / Model 
+1.
+2.
+3. **RQ 2/3**: The method to remove possible duplicates is error-prone, and does not take into account that the review scores and the numbers of reviews of listings can change over time.
+
+
+
+
+## Conclusion
+### Summary of Findings:
+1.
+2.
+3. We are 95% confident that the mean review count for listings that are advertisements is between 1168 and 1479.
+
+
+
+
+## References and Acknowledgements
+
+The authors would like to thank **Maya**, **Ziming**, **Nayan**, **Chris**, and **Nick M.** for their helpful suggestions and comments that improved the presentation of this poster.
+
+Ar, R., Scoa. (2016, December 1). Install.packages fails in knitr document: "trying to use cran without setting a mirror". Stack Overflow. Retrieved March 31, 2022, from https://stackoverflow.com/questions/33969024/install-packages-fails-in-knitr-document-trying-to-use-cran-without-setting-a
+
+TripAdvisor study reveals 42% of travelers worldwide use smartphones to plan or book their trips. Tripadvisor. (2015, June 30). Retrieved March 29, 2022, from https://ir.tripadvisor.com/news-releases/news-release-details/tripadvisor-study-reveals-42-travelers-worldwide-use-smartphones
+
+
+
