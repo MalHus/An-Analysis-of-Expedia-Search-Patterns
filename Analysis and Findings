@@ -310,9 +310,10 @@ Compared to the range of the values in the dataset, the 95% **Confidence Interva
 
 
 
+
 ## Limitations of Approach / Model 
-1.
-2.
+1. **RQ 1**: Hypothesis testing only allows for evaluating evidence against the null hypothesis but cannot tell the true value of a proportion. Thus, for the conclusion, since there was not enough evidence to conclude the proportion of mobile users is not 45% it could very well be but it also could be a range of other values. 
+2. **RQ 2**: Non-continuous parameters were used for both the predictor and the response variable of the linear regression.
 3. **RQ 2/3**: The method to remove possible duplicates is error-prone, and does not take into account that the review scores and the numbers of reviews of listings can change over time.
 
 
@@ -320,8 +321,8 @@ Compared to the range of the values in the dataset, the 95% **Confidence Interva
 
 ## Conclusion
 ### Summary of Findings:
-1.
-2.
+1. Expedia may have a similar proportion of mobile users to its competitors like TripAdvisor.
+2. There is little to no association between the number of reviews and the review score of a listing. 
 3. We are 95% confident that the mean review count for listings that are advertisements is between 1168 and 1479.
 
 
