@@ -19,6 +19,7 @@ expedia_data <- read_csv("ExpediaSearchData.csv")
 ```
 
 
+
 ## Research Question 1: Introduction
 \begin{center}
 \textbf{\textcolor{Blue}{TripAdvisor}} claims 45\% of travelers with a smartphone use their mobiles to book their travel itinerary. Does
@@ -29,14 +30,12 @@ With the rise of mobile usage, it is important to understand the **percentage of
 
 
 
-
 ## RQ1: Objective & Data Summary
 
 ### Objective
 Using a sample of searches on Expedia, we would like to determine whether or not the true proportion of mobile searches is 45% of the overall searches. In particular, we are exploring the question: **Is the proportion of mobile searches performed on Expedia's mobile platform 45% of the total searches?**
 
 ### Data Summary 
-
 **\textcolor{Blue}{Data Wrangling}**: Since we will only be using the variable `is_mobile`, to make the data frame simpler, all other variables have been removed.
 ```{r, eval=TRUE, include=FALSE}
 # PREPARING THE DATA
@@ -48,7 +47,6 @@ opts_chunk$set(warning = FALSE, message = FALSE)
 expedia_data <- read_csv("ExpediaSearchData.csv")
 mobile_data <- expedia_data %>% select(is_mobile)
 ```
-
 
 
 
@@ -67,7 +65,6 @@ Displays the proportion of searches done on mobile in comparison to other platfo
 
 
 
-
 ## RQ1: Statistical Methods
 
 **\textcolor{Blue}{Hypothesis Testing}**: A statistical method which involves evaluating evidence against a value for a **parameter** (number that describes the population). In our case we are assessing the **hypothesis** (called the null hypothesis) that the proportion of mobile searches **(parameter)** is equal to 45% **(value)**. 
@@ -76,7 +73,6 @@ Displays the proportion of searches done on mobile in comparison to other platfo
 1. Find the proportion of mobile searches for the Expedia sample data.
 2. Simulate more samples under the null hypothesis and find the proportion of mobile searches for each of the samples.
 3. Evaluate evidence against the null hypothesis.
-
 
 
 
@@ -137,7 +133,6 @@ p_value
 
 
 
-
 ## Research Question 2: Introduction and Objective
 \definecolor{Expediablue}{rgb}{0, 0.20784, 0.37254} 
 \definecolor{Expediayellow}{rgb}{0.93333, 0.76078, 0.09412}
@@ -147,13 +142,11 @@ p_value
 
 
 
-
-### RESEARCH QUESTION 2
+### Research Question 2
 What is the association between the **number of reviews** and the mean customer **review score**? 
 
 - **\textcolor{Black}{Number of Reviews}**: The quantity of reviews per listing, to the nearest 25.
 - **\textcolor{Black}{Review Score}**: The mean customer review score for the listed property on a scale from 0 to 5, rounded to nearest integer. 0 means that there are no reviews. 
-
 
 
 
@@ -215,7 +208,6 @@ expedia_rq2_distinct <- expedia_rq2 %>%
 
 
 
-
 ## RQ2: Results
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.height=2.5, fig.width=4, fig.align='center'}
@@ -247,7 +239,6 @@ summary(model1)$coefficients
 
 
 
-
 ## RQ2: Results
 - Null hypothesis: the slope of the fitted line is equal to 0. 
 - P-value indicates that there is no evidence against our null hypothesis, aligns with our slope of approximately 0. 
@@ -258,7 +249,6 @@ summary(model1)$coefficients
 
 - A bit surprising, results show that those two variables may not have been affecting one another as much as anticipated. 
 - For the future, weights could be added in order to improve the algorithm: an 'overall rating' calculated from a sample equation (0.5 x number of reviews) + (0.5 x review score).
-
 
 
 
@@ -344,7 +334,6 @@ travel_reviews_902
 
 
 
-
 ## RQ3: Statistical Methods
 
 **\textcolor{Blue}{Bootstrapping}**: A statistical method which involves the random re-sampling of data values from the original sample to obtain a **range of plausible** values of the population statistic.
@@ -409,7 +398,6 @@ quantile(boot_means$mean_review_count, c(0.025, 0.975))
 
 
 
-
 ## RQ3: Results
 \begin{center}
 \textbf{The range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements is (1168, 1479)}
@@ -424,13 +412,10 @@ Compared to the range of the values in the dataset, the 95% **Confidence Interva
 
 
 
-
-
 ## Limitations of Approach / Model 
 1. **RQ 1**: Hypothesis testing only allows for evaluating evidence against the null hypothesis but cannot tell the true value of a proportion. Thus, for the conclusion, since there was not enough evidence to conclude the proportion of mobile users is not 45% it could very well be but it also could be a range of other values. 
 2. **RQ 2**: Non-continuous parameters were used for both the predictor and the response variable of the linear regression.
 3. **RQ 2/3**: The method to remove possible duplicates is error-prone, and does not take into account that the review scores and the numbers of reviews of listings can change over time.
-
 
 
 
@@ -442,9 +427,7 @@ Compared to the range of the values in the dataset, the 95% **Confidence Interva
 
 
 
-
 ## References and Acknowledgements
-
 The authors would like to thank **Maya**, **Ziming**, **Nayan**, **Chris**, and **Nick M.** for their helpful suggestions and comments that improved the presentation of this poster.
 
 Ar, R., Scoa. (2016, December 1). Install.packages fails in knitr document: "trying to use cran without setting a mirror". Stack Overflow. Retrieved March 31, 2022, from https://stackoverflow.com/questions/33969024/install-packages-fails-in-knitr-document-trying-to-use-cran-without-setting-a
