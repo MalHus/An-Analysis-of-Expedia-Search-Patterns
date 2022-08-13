@@ -19,6 +19,121 @@ expedia_data <- read_csv("ExpediaSearchData.csv")
 ```
 
 
+## Research Question 1: Introduction
+\begin{center}
+\textbf{\textcolor{Blue}{TripAdvisor}} claims 45\% of travelers with a smartphone use their mobiles to book their travel itinerary. Does
+\textbf{\textcolor{Blue}{Expedia}} have the same proportion of mobile users?
+\end{center}
+
+With the rise of mobile usage, it is important to understand the **percentage of Expedia users** that actually use their mobile platform.  This can give an indication of a potential preference between platforms and reveals how Expedia's mobile platform compares to competitors such as TripAdvisor.
+
+
+
+
+## RQ1: Objective & Data Summary
+
+### Objective
+Using a sample of searches on Expedia, we would like to determine whether or not the true proportion of mobile searches is 45% of the overall searches. In particular, we are exploring the question: **Is the proportion of mobile searches performed on Expedia's mobile platform 45% of the total searches?**
+
+### Data Summary 
+
+**\textcolor{Blue}{Data Wrangling}**: Since we will only be using the variable `is_mobile`, to make the data frame simpler, all other variables have been removed.
+```{r, eval=TRUE, include=FALSE}
+# PREPARING THE DATA
+# Create a new data frame with only the is_mobile variable.
+library(tidyverse)
+library(knitr)
+opts_chunk$set(warning = FALSE, message = FALSE)
+
+expedia_data <- read_csv("ExpediaSearchData.csv")
+mobile_data <- expedia_data %>% select(is_mobile)
+```
+
+
+
+
+## RQ1: Visualization 
+```{r, echo=FALSE, fig.height=1.7, fig.width=5, fig.align='center'}
+mobile_data %>% 
+  mutate(is_mobile2 = case_when(is_mobile == 1 ~ 'True',
+                                is_mobile == 0 ~ 'False')) %>%
+  ggplot(aes(x=is_mobile2, fill=is_mobile2)) +
+  geom_bar() +
+  scale_fill_manual(values=c("#1C4476", "#FFD51A")) +
+  labs(x= "Whether Search is Done on Mobile", subtitle = "Fig. 1: Proportion of Mobile and Non-Mobile Users", fill = "Is mobile?", color = "Is mobile?")
+```
+**Bar Graph**:
+Displays the proportion of searches done on mobile in comparison to other platforms for our sample data. From this, we can estimate that mobile searches comprise around 40% of the total searches in our data. This is likely possible under the null hypothesis and means that the true proportion of overall mobile searches could be 45%, but must be tested further.
+
+
+
+
+## RQ1: Statistical Methods
+
+**\textcolor{Blue}{Hypothesis Testing}**: A statistical method which involves evaluating evidence against a value for a **parameter** (number that describes the population). In our case we are assessing the **hypothesis** (called the null hypothesis) that the proportion of mobile searches **(parameter)** is equal to 45% **(value)**. 
+
+### Hypothesis Testing Steps
+1. Find the proportion of mobile searches for the Expedia sample data.
+2. Simulate more samples under the null hypothesis and find the proportion of mobile searches for each of the samples.
+3. Evaluate evidence against the null hypothesis.
+
+
+
+
+## RQ1: Results 
+```{r results, echo=FALSE, message=FALSE, warning=FALSE, fig.show='hide', results='hide'}
+library(tidyverse)
+library(knitr)
+opts_chunk$set(warning = FALSE, message = FALSE)
+
+expedia_data <- read_csv("ExpediaSearchData.csv")
+mobile_data <- expedia_data %>% select(is_mobile)
+
+# Step 1: Find test statistic
+num_obs_data = as.numeric(mobile_data %>% summarize(n = n()))
+num_mobile <- mobile_data %>% 
+  filter(is_mobile == 1) %>% 
+  summarise(n = n())
+  
+test_stat <-  as.numeric(num_mobile) / num_obs_data
+
+# Step 2: Simulate under null hypothesis
+set.seed(523)
+repetitions <- 1000;
+simulated_values <- rep(NA, repetitions)
+n_observations <- 100
+  
+for(i in 1:repetitions){
+  new_sim <- sample(c("yes", "no"), 
+                    size = n_observations,
+                    prob = c(0.45, 0.55),
+                    replace = TRUE)
+
+  sim_p <- sum(new_sim == "yes") / n_observations
+  
+  simulated_values[i] <- sim_p 
+}
+
+sim <- tibble(p_mobile = simulated_values)
+
+sim %>% ggplot(aes(x=p_mobile)) + 
+  geom_histogram(binwidth=0.01, color="black", fill="gray") +
+  geom_vline(xintercept = 0.45 - abs(0.45 - test_stat), color="red") +
+  geom_vline(xintercept = 0.45 + abs(0.45 - test_stat), color="blue") +
+  xlab("Simulated Proportion of Mobile Users Based on a Sample Size of 100
+       (p_mobile = 0.45)")
+
+# Step 3: Evaluate evidence against null hypothesis
+p_value <- sim %>%  
+  filter(abs(p_mobile - 0.45) >= abs(test_stat - 0.45)) %>% 
+  summarize(p_value = n() / repetitions)
+p_value
+```
+
+- The sample data of overall Expedia searches gives us a proportion 40.2% mobile users. 
+- After conducting hypothesis testing, we find that the probability of more extreme values than the test statistic under the null hypothesis is 0.358. 
+- Since it is over 0.10, we have no evidence to reject the hypothesis that the proportion of mobile users is 45%.
+- From this we can conclude that Expedia may have a similar proportion of mobile users to its competitors like TripAdvisor.
 
 
 
