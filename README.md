@@ -1,4 +1,4 @@
-# Expedia Search Patterns
+# An Analysis of Expedia Search Patterns
 
 University of Toronto STA130: Intro to Statistical Reasoning and Data Science final project.
 
