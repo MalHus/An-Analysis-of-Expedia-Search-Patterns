@@ -1,6 +1,7 @@
 # An Analysis of Expedia Search Patterns
 
 University of Toronto - Malaikah Hussain, Hannah Pan, Julie Tang
+
 Final Project in STA130: Intro to Statistical Reasoning and Data Science
 
 Research Questions:
