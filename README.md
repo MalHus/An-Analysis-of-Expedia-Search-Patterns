@@ -1,5 +1,5 @@
 # An Analysis of Expedia Search Patterns
-![alt text](https://github.com/[MalHus]/[An-Analysis-of-Expedia-Search_Pattern]/blob/[main]/expedia.png?raw=true)
+![alt text](https://github.com/[MalHus]/[An-Analysis-of-Expedia-Search-Patterns]/blob/[main]/expedia.png?raw=true)
 
 
 <p align="center">
