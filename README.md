@@ -1,8 +1,8 @@
 # An Analysis of Expedia Search Patterns
 
-## Overview
-
+<p align="center">
 🔎 What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
+</p>
 
 The following project aimed to answer specific questions relating to **search patterns** that emerge in datasets obtained from **Expedia**. 
 The analyses were performed using the programming language **R** and presented in a non-technical friendly manner through a presentation created in **R Markdown**.
