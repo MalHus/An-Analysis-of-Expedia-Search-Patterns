@@ -1,7 +1,7 @@
 # An Analysis of Expedia Search Patterns
 
 <p align="center">
-🔎 What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
+What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
 </p>
 
 The following project aimed to answer specific questions relating to **search patterns** that emerge in datasets obtained from **Expedia**. 
