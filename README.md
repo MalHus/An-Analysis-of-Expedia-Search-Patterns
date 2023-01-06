@@ -17,8 +17,9 @@ The analyses were performed using the programming language **R** and presented i
 | What is the association between the number of reviews and the mean customer review score? | Simple Linear Regression |
 | What is the range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements (labeled as “Ad”)? | Bootstrapping |
 
-## University of Toronto            ## Final Mark
+## University of Toronto          
 Intro to Statistical Reasoning and Data Science (STA130 Final Project)
+Mark: 10.55/11.05 (~95%)
 
 ## Authors
 Malaikah Hussain, Hannah Pan, Julie Tang
