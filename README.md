@@ -18,7 +18,7 @@ The analyses were performed using the programming language **R** and presented i
 | What is the range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements (labeled as “Ad”)? | Bootstrapping |
 
 ## University of Toronto
-Intro to Statistical Reasoning and Data Science Final Project
+Intro to Statistical Reasoning and Data Science (STA130 Final Project)
 
 ## Authors
 Malaikah Hussain, Hannah Pan, Julie Tang
