@@ -13,8 +13,7 @@ The analyses were performed using the programming language **R** and presented i
 | --- | --- |
 | Is the proportion of mobile searches performed on Expedia’s mobile platform 45% of the total searches? | Group Hypothesis Testing |
 | What is the association between the number of reviews and the mean customer review score? | Simple Linear Regression |
-| What is the range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements 
-(labeled as “Ad”)? | Bootstrapping |
+| What is the range of plausible values for the average number of reviews for Expedia property listings that are travel advertisements (labeled as “Ad”)? | Bootstrapping |
 
 ## University of Toronto
 Intro to Statistical Reasoning and Data Science Final Project
