@@ -1,10 +1,9 @@
 <p align="center">
-<img width="600" alt="search-bar-expedia" src="https://user-images.githubusercontent.com/95773832/211069179-b99cecc8-cdbe-4ad3-af18-e3fadd882e6e.png">
+<img width="550" alt="search-bar-expedia" src="https://user-images.githubusercontent.com/95773832/211069179-b99cecc8-cdbe-4ad3-af18-e3fadd882e6e.png">
 </p>
 
-<p align="center">
+
 What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
-</p>
 
 The following project aimed to answer specific questions relating to **search patterns** that emerged in datasets obtained from **Expedia**. 
 The analyses were performed using the programming language **R** and presented in a non-technical friendly manner through a presentation created in **R Markdown**.
