@@ -6,7 +6,7 @@
 
 What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
 
-The following project aimed to answer specific questions relating to **search patterns** that emerged in datasets obtained from **Expedia**. 
+This [project](https://github.com/MalHus/An-Analysis-of-Expedia-Search-Patterns/blob/main/A%20Splash%20of%20Expedia%20Search%20Patterns.pdf) aimed to answer specific questions relating to **search patterns** that emerged in datasets obtained from **Expedia**. 
 The analyses were performed using the programming language **R** and presented in a non-technical friendly manner through a presentation created in **R Markdown**.
 
 ## Research Questions
