@@ -1,6 +1,3 @@
-<p align="center">
-<img width="500" alt="search-bar-expedia" src="https://user-images.githubusercontent.com/95773832/211069179-b99cecc8-cdbe-4ad3-af18-e3fadd882e6e.png">
-</p>
 
 ## Overview
 
