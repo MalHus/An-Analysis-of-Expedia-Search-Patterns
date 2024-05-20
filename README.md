@@ -1,6 +1,5 @@
 
-## Overview
-
+## Expedia Search Patterns
 What patterns emerge when millions of customers search for their perfect trip on the world's leading travel platform?
 
 This [project](https://github.com/MalHus/An-Analysis-of-Expedia-Search-Patterns/blob/main/A%20Splash%20of%20Expedia%20Search%20Patterns.pdf) aimed to answer specific questions relating to **search patterns** that emerged in datasets obtained from **Expedia**. 
